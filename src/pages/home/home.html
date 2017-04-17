@@ -1,0 +1,50 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>  
+  <!-- Cards -->
+  <ion-list [virtualScroll]="places">
+    <ion-item *virtualItem="let place">
+
+       <ion-card>        
+        <ion-card-content>
+          <ion-card-title>
+            {{place.title}}
+          </ion-card-title>
+          
+          <div class="text-frame">
+          {{place.description}}
+          </div> 
+        </ion-card-content>
+
+        <ion-row no-padding>          
+          <ion-col col-6 text-center>
+            <button ion-button clear small color="danger" icon-left>
+              <ion-icon name='share-alt'></ion-icon>
+              Share
+            </button>
+          </ion-col>
+          <ion-col col-6 text-center>
+            <button ion-button clear small color="danger" icon-left>
+              <ion-icon name='trash'></ion-icon>
+              Delete
+            </button>
+          </ion-col>
+        </ion-row>
+
+      </ion-card>
+      
+    </ion-item>
+  </ion-list>
+
+  <!-- Floating action button -->
+  <ion-fab right bottom>
+    <button ion-fab color="secondary" (click)="goToMap()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>
