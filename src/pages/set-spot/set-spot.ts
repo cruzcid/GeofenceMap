@@ -4,6 +4,7 @@ import {
  GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, CameraPosition, MarkerOptions, Marker
 } from '@ionic-native/google-maps';
 
+
 @IonicPage()
 @Component({
   selector: 'page-set-spot',
@@ -15,6 +16,8 @@ export class SetSpot {
   private map: GoogleMap;
   private markerOnMap:boolean; 
   private markerOptions: MarkerOptions;
+  private latLng:any;
+  
 
   constructor(
     public navCtrl: NavController, 
@@ -26,7 +29,12 @@ export class SetSpot {
   // Load map only after view is initialized
   ngAfterViewInit() {
     this.loadMap();
+    //this.loadGeofence();
   }
+
+ // ____________________________________________________________________
+ // ----------------      MAPS      ------------------------------------
+ // ____________________________________________________________________
 
   private loadMap():void {  
     // create a new map by passing HTMLElement
@@ -45,9 +53,10 @@ export class SetSpot {
 
     // Long click on Map
     this.map.on(GoogleMapsEvent.MAP_LONG_CLICK).subscribe((latLng) =>{
-      
+            
       console.log("Long Click");
-      this.setMarkerOptions( latLng );      
+      this.latLng = latLng;
+      this.setMarkerOptions();      
       this.onLongClick();
 
     });
@@ -74,12 +83,12 @@ export class SetSpot {
     };    
   }
 
-  private setMarkerOptions( latLng:any ) {
+  private setMarkerOptions( ) {
     console.log("setMarkerOptions()");
-    let touchedPosition: LatLng = new LatLng(latLng.lat, latLng.lng);
+    let touchedPosition: LatLng = new LatLng(this.latLng.lat, this.latLng.lng);
     this.markerOptions = {
       position : touchedPosition,
-      title: '' + latLng.lat + ' ' + latLng.lng
+      title: '' + this.latLng.lat + ' ' + this.latLng.lng
     }
   }
 
@@ -133,7 +142,19 @@ export class SetSpot {
     alert.present();   
   }
 
+ // ____________________________________________________________________
+ // ----------------   GEOFENCE     ------------------------------------
+ // ____________________________________________________________________
+
+  /*private loadGeofence():void {
+    this.geofence.initialize().then(
+      // resolved promise does not return a value
+      () => console.log('Geofence Plugin Ready'),
+      (err) => console.log(err)
+    );
+  }  */
   private saveGeofence():void {
     console.log("Save geofence");
+    
   }
 }

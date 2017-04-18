@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { MyApp } from './app.component';
 
+
 @NgModule({
   declarations: [
     MyApp
@@ -21,7 +22,7 @@ import { MyApp } from './app.component';
   providers: [
     StatusBar,
     SplashScreen,
-    GoogleMaps,
+    GoogleMaps,    
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
