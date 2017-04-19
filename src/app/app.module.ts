@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { MyApp } from './app.component';
-
+import { Geofence } from '@ionic-native/geofence';
 
 @NgModule({
   declarations: [
@@ -23,6 +23,7 @@ import { MyApp } from './app.component';
     StatusBar,
     SplashScreen,
     GoogleMaps,    
+    Geofence,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
