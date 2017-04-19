@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import {
- GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, CameraPosition, MarkerOptions, Marker
+ GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, CameraPosition, MarkerOptions, Marker, CircleOptions, Circle
 } from '@ionic-native/google-maps';
 import { Geofence } from '@ionic-native/geofence';
 
@@ -19,6 +19,8 @@ export class SetSpot {
   private latLng:any;
   private radiosity:number;
   private static staticID:number = 0;
+  private circleAdded:boolean = false;
+  private circle:Circle;
   
 
   constructor(
@@ -109,23 +111,37 @@ export class SetSpot {
 
   private removeMarker():void {
     console.info("removeMarker():void");
-    this.marker.remove();
+    this.marker.remove();  
     this.markerOnMap = false; 
   }
 
+  private removeCircle():void {    
+    this.circleAdded = false;
+    this.radiosity = 5;
+    this.circle.remove();
+  }
+
+  private radiousChange():void {
+    this.circle.setRadius(this.radiosity);
+  }
+  
   private onShortClick():void {
-    this.markerOnMap = false;
-    this.marker.remove();
+    this.removeItemsFromMap();
   }
 
   private onLongClick():void {
     console.log("onLongClick():void");    
     if( this.markerOnMap ) {
-      this.removeMarker();            
+      this.removeItemsFromMap();    
     }      
     this.addMarker(this.markerOptions);
-  }
+    this.addCircle();
 
+  }
+  private removeItemsFromMap():void {
+      this.removeMarker();     
+      this.removeCircle(); 
+  }
   private presentAlert( message:string ) {
     console.log("presentAlert()");
   
@@ -147,16 +163,16 @@ export class SetSpot {
 
 
   public addCircle() {
-    /*CircleOptions {
-        center?: LatLng;
-        radius?: number;
-        strokeColor?: string;
-        strokeWidth?: number;
-        fillColor?: string;
-        visible?: boolean;
-        zIndex?: number;
-    }
-    this.map.addCircle().then();*/
+    let circleOptions : CircleOptions = {
+        center: this.latLng,
+        radius: this.radiosity,                
+        visible: true      
+    }    
+
+    this.circleAdded = true;
+    this.map.addCircle(circleOptions).then(circle => this.circle = circle,
+       failure => console.error(failure));
+       
   }
  // ____________________________________________________________________
  // ----------------   GEOFENCE     ------------------------------------
@@ -189,7 +205,7 @@ export class SetSpot {
       () => console.log('Geofence added'),
       (err) => console.log('Geofence failed to add')
     );
-    
+       
   }
   private loadGeofence():void {
       this.geofence.initialize().then(

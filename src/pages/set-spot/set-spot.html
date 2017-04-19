@@ -13,8 +13,8 @@
 
 
 <ion-content padding>
-    <ion-item>
-      <ion-range min="5" max="400" [(ngModel)]="radiosity">
+    <ion-item *ngIf="markerOnMap">
+      <ion-range min="5" max="400" [(ngModel)]="radiosity" (ngModelChange)="radiousChange($event)">
         <ion-icon range-left small name="disc"></ion-icon>
         <ion-icon range-right name="disc"></ion-icon>  
       </ion-range>    
