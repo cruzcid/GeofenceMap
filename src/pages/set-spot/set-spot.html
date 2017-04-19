@@ -13,5 +13,12 @@
 
 
 <ion-content padding>
+    <ion-item>
+      <ion-range min="5" max="400" [(ngModel)]="radiosity">
+        <ion-icon range-left small name="disc"></ion-icon>
+        <ion-icon range-right name="disc"></ion-icon>  
+      </ion-range>    
+    </ion-item>
+   
     <div #map id="map"  style="height:100%;"></div>
 </ion-content>

@@ -17,6 +17,8 @@ export class SetSpot {
   private markerOnMap:boolean; 
   private markerOptions: MarkerOptions;
   private latLng:any;
+  private radiosity:number;
+  private static staticID:number = 0;
   
 
   constructor(
@@ -143,21 +145,40 @@ export class SetSpot {
     alert.present();   
   }
 
+
+  public addCircle() {
+    /*CircleOptions {
+        center?: LatLng;
+        radius?: number;
+        strokeColor?: string;
+        strokeWidth?: number;
+        fillColor?: string;
+        visible?: boolean;
+        zIndex?: number;
+    }
+    this.map.addCircle().then();*/
+  }
  // ____________________________________________________________________
  // ----------------   GEOFENCE     ------------------------------------
  // ____________________________________________________________________
  
   private saveGeofence():void {
     console.log("Save geofence");
+
     //options describing geofence
+    let numberId:number = Math.floor(Math.random() * 1000000) + 1 ;
+    let stringID:string = "DCM_ID:" + SetSpot.staticID++ + "_" + numberId;
+    let notificationID =  "C_" + stringID;    
+    console.log(notificationID);    
+
     let fence = {
-      id: "69ca1b88-6fbe-4e80-a4d4-ff4d3748acdb", //any unique ID
+      id: stringID, //any unique ID
       latitude:       this.latLng.lat, //center of geofence radius
       longitude:      this.latLng.lng,
-      radius:         10, //radius to edge of geofence
+      radius:         this.radiosity, //radius to edge of geofence
       transitionType: 3, //see 'Transition Types' below
       notification: { //notification settings
-          id:             1, //any unique ID
+          id:             notificationID, //any unique ID
           title:          "You crossed a fence", //notification title
           text:           "You just arrived to Gliwice city center.", //notification body
           openAppOnClick: true //open app when notification is tapped
