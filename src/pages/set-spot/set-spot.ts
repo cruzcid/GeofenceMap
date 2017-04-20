@@ -177,7 +177,7 @@ export class SetSpot {
  // ____________________________________________________________________
  // ----------------   GEOFENCE     ------------------------------------
  // ____________________________________________________________________
- 
+  
   private saveGeofence():void {
     console.log("Save geofence");
 
@@ -207,6 +207,7 @@ export class SetSpot {
     );
        
   }
+
   private loadGeofence():void {
       this.geofence.initialize().then(
         // resolved promise does not return a value
@@ -214,4 +215,42 @@ export class SetSpot {
         (err) => console.log(err)
       )
   }
+
+  // Show alert More advanced UI designs should be defined within a modal. 
+  private onSavePromt():void {
+    this.map.setClickable(false);
+    let prompt = this.alertCtrl.create({
+      title: 'Add Note XD',
+      message: "Save notification on this place ;)",
+      inputs: [
+        {
+          name: 'title',
+          placeholder: 'Title'
+        },
+        {
+          name: 'message',
+          placeholder: 'Add message note'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+            this.map.setClickable(true);
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            console.log('Saved clicked');
+            this.map.setClickable(true);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
+  
 }
