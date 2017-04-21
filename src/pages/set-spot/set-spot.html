@@ -3,7 +3,7 @@
   <ion-navbar color="primary">
     <ion-title>SetSpot</ion-title>
     <ion-buttons end *ngIf="markerOnMap">
-      <button ion-button icon-left color="royal" (click)="onSavePromt()">
+      <button ion-button icon-left color="royal" (click)="onSavePoint()">
         <ion-icon name="checkmark"></ion-icon> Save
       </button>
     </ion-buttons>
@@ -14,7 +14,7 @@
 
 <ion-content padding>
     <ion-item *ngIf="markerOnMap">
-      <ion-range min="5" max="400" [(ngModel)]="radiosity" (ngModelChange)="radiousChange($event)">
+      <ion-range min="5" max="1500" [(ngModel)]="radiosity" (ngModelChange)="radiousChange($event)">
         <ion-icon range-left small name="disc"></ion-icon>
         <ion-icon range-right name="disc"></ion-icon>  
       </ion-range>    

@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar color="primary"> 
+    <ion-title ></ion-title>
+    <ion-buttons left>      
+      <button ion-button icon-left color="royal" (click)="onCancel()">
+        <ion-icon name="logo-freebsd-devil"></ion-icon> Cancel
+      </button>      
+    </ion-buttons> 
+
+    <ion-buttons end >
+      <button ion-button icon-left color="royal" (click)="onSave()">
+        <ion-icon name="checkmark"></ion-icon> Save
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h2>Note Saving Options</h2>
+  <ion-list>
+
+     <!-- Note Name -->
+    <ion-item>
+      <ion-label color="primary">Name</ion-label>
+      <ion-input placeholder="Text Input" [(ngModel)]="noteName" maxlength="15"></ion-input>
+    </ion-item>
+    
+    <!-- Note Description -->
+    <ion-item>
+      <ion-textarea placeholder="Enter a description" rows="4" maxlength="80" [(ngModel)]="mNoteDescription"></ion-textarea>
+    </ion-item>
+
+    <!-- Activate alert when -->
+    <ion-item>
+      <ion-label>Activate on</ion-label>
+      <ion-select [(ngModel)]="mTransitionType" >
+        <ion-option value="1" selected="true">Enter</ion-option>
+        <ion-option value="2">Exit</ion-option>
+        <ion-option value="3">Enter & Exit</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

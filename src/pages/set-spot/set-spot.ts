@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController} from 'ionic-angular';
 import {
  GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, CameraPosition, MarkerOptions, Marker, CircleOptions, Circle
 } from '@ionic-native/google-maps';
@@ -28,7 +28,8 @@ export class SetSpot {
     public navParams: NavParams, 
     private googleMaps: GoogleMaps,
     private alertCtrl: AlertController,
-    private geofence: Geofence ) {
+    private geofence: Geofence, 
+    private modalCtrl: ModalController ) {
   }
 
   // Load map only after view is initialized
@@ -251,6 +252,22 @@ export class SetSpot {
     });
     prompt.present();
   }
+  
+  // ____________________________________________________________________
+  // ----------------      MODAL     ------------------------------------
+  // ____________________________________________________________________
+  
+  private onSavePoint() {
+    this.map.setClickable(false);
+    let savingOptionsModal = this.modalCtrl.create('SaveGeofenceModal', {userId: 666});
 
+    savingOptionsModal.present();
+
+    savingOptionsModal.onDidDismiss(data => {
+      let objectAnswer:any = data;
+      console.log("Buchones :" + objectAnswer);
+      this.map.setClickable(true);
+    });    
+  } 
   
 }
