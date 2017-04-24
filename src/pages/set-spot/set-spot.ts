@@ -19,7 +19,7 @@ export class SetSpot {
   private latLng:any;
   private radiosity:number;
   private static staticID:number = 0;
-  private circleAdded:boolean = false;
+  private circleAdded:boolean;
   private circle:Circle;
   
 
@@ -30,6 +30,11 @@ export class SetSpot {
     private alertCtrl: AlertController,
     private geofence: Geofence, 
     private modalCtrl: ModalController ) {
+      console.log("LC-: Constructor has arrived.");
+      this.radiosity = 5;
+      this.circleAdded = false;
+      this.latLng = null;
+      
   }
 
   // Load map only after view is initialized
@@ -37,13 +42,25 @@ export class SetSpot {
     this.loadMap();
     this.loadGeofence();
   }
-
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter");
+  }
+  ionViewWillLeave() {
+    console.log("ionViewWillLeave");
+  }
+  ionViewDidLeave() {
+    this.map.clear();
+    console.log("ionViewDidLeave");
+  }
  // ____________________________________________________________________
  // ----------------      MAPS      ------------------------------------
  // ____________________________________________________________________
 
   private loadMap():void {  
-    // create a new map by passing HTMLElement
+
+    console.log(" LoadMap");
+
+    // create a new map by passing HTMLElement    
     let element: HTMLElement = document.getElementById('map');
 
     this.map = this.googleMaps.create(element);
@@ -51,6 +68,7 @@ export class SetSpot {
     // listen to MAP_READY event
     // You must wait for this event to fire before adding something to the map or modifying it in anyway
     this.map.one(GoogleMapsEvent.MAP_READY).then(() => {console.log('Map is ready!')
+     
       this.map.setMyLocationEnabled(true);
       this.map.setClickable(true);
       this.map.setCompassEnabled(true);
@@ -110,6 +128,10 @@ export class SetSpot {
         });
   }  
 
+  public removeMapOptions():void {
+    this.map.clear();
+  }
+
   private removeMarker():void {
     console.info("removeMarker():void");
     this.marker.remove();  
@@ -119,6 +141,7 @@ export class SetSpot {
   private removeCircle():void {    
     this.circleAdded = false;
     this.radiosity = 5;
+    console.info("removeCircle():void");
     this.circle.remove();
   }
 
